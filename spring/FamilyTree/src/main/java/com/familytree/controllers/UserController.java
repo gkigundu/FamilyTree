@@ -1,4 +1,4 @@
-package com.familytree.repositories;
+package com.familytree.controllers;
 
 import java.util.List;
 
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.familytree.beans.User;
 import com.familytree.exceptions.GeneralException;
+import com.familytree.repositories.UserService;
 
 @RestController
 @RequestMapping
@@ -31,7 +32,7 @@ public class UserController {
 		}catch(GeneralException e) {
 			status = HttpStatus.NO_CONTENT;
 		}catch(Exception e) {
-			status = HttpStatus.
+			status = HttpStatus.BAD_GATEWAY;
 		}
 		return new ResponseEntity<>(users,status);
 	}
