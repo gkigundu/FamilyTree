@@ -6,8 +6,6 @@ import { FormsModule } from '@angular/forms';
 // importing routermodule and routes module for using different urls for different pages
 import { RouterModule, Routes } from '@angular/router';
 
-import { AppRoutingModule } from './app-routing.module';
-
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UserComponent } from './components/user/user.component';
@@ -16,23 +14,17 @@ import { HomeComponent } from './components/home/home.component';
 import { ResetPWComponent } from './components/reset-pw/reset-pw.component';
 import { RegisterComponent } from './components/register/register.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    UserComponent,
-    LoginComponent,
-    HomeComponent,
-    ResetPWComponent,
-    RegisterComponent,
-    
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+// creating our routes with variable appRoutes 
+const appRoutes: Routes = [
+    //each route has an object, path
+    {path:'', component:LoginComponent},
+    {path:'login', component:LoginComponent},
+    {path:'register', component:RegisterComponent},
+    {path:'resetpassword', component:ResetPWComponent}
+  ];
+
+  @NgModule({
+  imports: [RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule]
 })
-export class AppModule { }
+export class AppRoutingModule { }

@@ -1,0 +1,41 @@
+
+<h1>Hello, {{firstName}} {{lastName}}</h1>
+<p>{{email}}</p>
+
+<button (click)="onClick()">Click Me</button>
+
+<h2>Edit User</h2>
+<form>
+  <div>
+    <label for="firstName">First Name: </label>
+    <input type="text" [(ngModel)]="firstName" name="firstName">
+  </div>
+  <div>
+      <label for="lastName">Last Name: </label>
+      <input type="text" [(ngModel)]="lastName" name="lastName">
+    </div>
+  <div>
+      <label for="email">email: </label>
+      <input type="text" [(ngModel)]="email" name="email">
+    </div>
+    
+</form>
+
+<h2>My Hobbies</h2>
+
+<!-- (submit) is a submit event
+      to take value from input, assign a hobby id to the input tag. 
+      it is not the same as an id attribute.
+      hobby is passed as a value to addHobby. 
+-->
+<form (submit)="addHobby(hobby.value)">
+  <div>
+    <label for="hobby">Hobby:</label>
+    <input type="text" #hobby>
+  </div>
+</form>
+<ul>
+  <li *ngFor="let h of hobbies; let i = index">
+    {{i + 1}}: {{h}} <button (click)="deleteHobby(h)">X</button>
+  </li>
+</ul>
