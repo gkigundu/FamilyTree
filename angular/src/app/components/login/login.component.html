@@ -1,18 +1,21 @@
 <h1>Welcome to FamilyTree!</h1>
 
-<div>
- <h3>Login</h3>
- <div>
-   <form>
-     <label for="username">Username: </label>
-     <input id="username" type="email" placeholder="email" name="username">
-
-     <label for="password">Password: </label>
-     <input id="password" type="password" name="password">
-
-     <button id="login" (click)="login()" type="submit">Login</button>
-     <button id="register" (click)="register()" type="submit">Register</button>
-     <button id="resetPW" (click)="resetPW()" type="submit">Reset Password</button>
-   </form>
- </div>
-</div>
+<div class="content">
+     
+       <form class="form">
+           <div class="form-group">
+              
+              <label for="username">Username: </label>
+              <input id="username" type="email" placeholder="email" name="username">
+         
+              <label for="password">Password: </label>
+              <input id="password" type="password" name="password">
+           </div>
+            
+            <div class="form-group">
+                <button id="login" (click)="login()" type="submit">Login</button>
+                <button id="register" (click)="register()" type="submit">Register</button>
+                <button id="resetPW" (click)="resetPW()" type="submit">Reset Password</button>
+            </div>     
+       </form>
+     </div>

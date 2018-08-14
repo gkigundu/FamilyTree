@@ -1,0 +1,47 @@
+h1 {
+    font-size: 50px;
+    margin: auto;
+    text-align: center;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+.container {
+    width: 70%;
+    margin: 2% auto;
+}
+
+/* effective under 1200px */
+@media(max-width: 1200px) {
+    .container {
+        width: 100%;
+    }
+    h1 {
+        font-size: 40px;
+    }
+}
+
+/* effective under between 900px to 450px */
+@media(max-width: 900px) and (min-width: 450px) {
+    .container {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+}
+
+/* effective under 450px */
+@media(max-width: 450px) {
+    .container {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 17px;
+    }
+}

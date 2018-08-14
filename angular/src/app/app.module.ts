@@ -10,7 +10,6 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { UserComponent } from './components/user/user.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { ResetPWComponent } from './components/reset-pw/reset-pw.component';
@@ -20,7 +19,6 @@ import { RegisterComponent } from './components/register/register.component';
   declarations: [
     AppComponent,
     NavbarComponent,
-    UserComponent,
     LoginComponent,
     HomeComponent,
     ResetPWComponent,
