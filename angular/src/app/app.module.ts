@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpClientModule } from '@angular/common/http';
 // importing FormsModule for two-way data binding to form elements: ngModel
 import { FormsModule } from '@angular/forms';
 // importing routermodule and routes module for using different urls for different pages
@@ -22,13 +22,14 @@ import { RegisterComponent } from './components/register/register.component';
     LoginComponent,
     HomeComponent,
     ResetPWComponent,
-    RegisterComponent,
+    RegisterComponent
     
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

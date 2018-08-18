@@ -2,15 +2,15 @@ export class UserLogin{
     private username:string;
     private password:string;
     private email:string;
-    private phoneNumber:number;
+    //private phoneNumber:number;
 
     constructor(){}
 
-    public setAll(newUser:UserLogin){
+    public $setAll(newUser:UserLogin){
         this.username=newUser.$username;
         this.password=newUser.$password;
         this.email=newUser.$email;
-        this.phoneNumber=newUser.$phoneNumber;
+        //this.phoneNumber=newUser.$phoneNumber;
     }
     public set $username(value:string){
         this.username=value;
@@ -29,11 +29,11 @@ export class UserLogin{
     }
     public get $email(){
         return this.email;
-    }
+    }/*
     public set $phoneNumber(value:number){
         this.phoneNumber=value;
     }
     public get $phoneNumber(){
         return this.phoneNumber;
-    }
+    }*/
 }

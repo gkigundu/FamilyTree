@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
+import{ AuthGuardService} from './services/auth-guard.service';
+import{ AuthRedirectService} from './services/auth-redirect.service';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
@@ -14,11 +16,11 @@ import { RegisterComponent } from './components/register/register.component';
 // creating our routes 
 const appRoutes: Routes = [
     //each route has an object, path
-    {path:'', component:LoginComponent},
-    {path:'login', component:LoginComponent},
-    {path:'register', component:RegisterComponent},
-    {path:'resetpassword', component:ResetPWComponent},
-    {path:'home', component:HomeComponent}
+    {path:'', component:LoginComponent,canActivate:[AuthRedirectService]},
+    {path:'login', component:LoginComponent,canActivate:[AuthRedirectService]},
+    {path:'register',  component:RegisterComponent,canActivate:[AuthRedirectService]},
+    {path:'forgotpassword', component:ResetPWComponent},
+    {path:'home', component:HomeComponent, canActivate:[AuthGuardService]}
   ];
 
   @NgModule({
