@@ -6,25 +6,29 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Component
 @Entity
 @Table(schema="familytree",name="USERS")
 public class User  extends GenericBean {
 
-	//foreign keys to LOGIN table
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	@Column(name="USER_ID")
-	private Integer userID;
+	private Integer id;
+	
+	@OneToOne(fetch= FetchType.LAZY, mappedBy="user")
+	@JsonIgnore
+	private Login login;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "FAMILY_ID")
+	@JsonIgnore
 	private Family family;
 	
 	@Column(name="PHONE_NUMBER")
@@ -40,21 +44,31 @@ public class User  extends GenericBean {
 		super();
 	}
 	
-	public User(Integer userID, Family family, String phoneNumber, String firstName, String lastName) {
-		super();
-		this.userID = userID;
+	public User(Integer id, Family family, String phoneNumber, String firstName, String lastName, Login login) {
+		super(id);
+		this.id = id;
 		this.family = family;
 		this.phoneNumber = phoneNumber;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.login=login;
+	}
+	public void setId(Integer id) {
+		this.id=id;
+		super.setId(id);
+	}
+	public Integer getId() {
+		return this.id;
+	}
+	
+	public Login getLogin() {
+		return login;
 	}
 
-	public int getUserID() {
-		return userID;
+	public void setLogin(Login login) {
+		this.login = login;
 	}
-	public void setUserID(Integer user_id) {
-		this.userID = user_id;
-	}
+
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -81,16 +95,16 @@ public class User  extends GenericBean {
 	public void setFamily(Family family) {
 		this.family = family;
 	}
-	public Integer getID() {
-		return userID;
-	}
+	
 	@Override
 	public String toString() {
-		return "User [userID=" + userID + ", phoneNumber=" + phoneNumber
-				+ ", firstName=" + firstName + ", lastName=" + lastName +", family_id=" + family.getId() +"]";
+		return "User [id=" + id + ", phoneNumber=" + phoneNumber==null?"null":phoneNumber
+				+ ", firstName=" + firstName==null?"null":firstName 
+						+ ", lastName=" + lastName==null?"null":lastName
+								+"]";
 	}
 	public void copyAll(User user) {
-		setUserID(user.getUserID());
+		setId(user.getId());
 		setPhoneNumber(user.getPhoneNumber());
 		setFirstName(user.getFirstName());
 		setLastName(user.getLastName());

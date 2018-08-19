@@ -17,67 +17,67 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(schema="familytree",name="FAMILY")
 public class Family  extends GenericBean {
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	@Column(name="FAMILY_ID")
 	private Integer id;
+	
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "family", orphanRemoval = true)
-	@Column(name = "FAMILY_ID")
 	private List<User> users=new ArrayList<User>();
-//	@OneToMany(cascade = CascadeType.ALL,mappedBy = "family", orphanRemoval = true)
-//	@Column(name = "FAMILY_ID")
-//	private List<Login> logins=new ArrayList<Login>();
+	
+	public Family() {
+		super();
+	}
+	public Family(Integer id, ArrayList<User> users) {
+		super(id);
+		this.id = id;
+		this.users = users;
+	}
+	public void setId(Integer id) {
+		this.id=id;
+		super.setId(id);
+	}
+	public Integer getId() {
+		return this.id;
+	}
 
 	public List<User> getUsers() {
-		return users;
+		return this.users;
 	}
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
 	
-//	public List<Login> getLogins() {
-//		return logins;
-//	}
-//	public void setLogins(List<Login> logins) {
-//		this.logins = logins;
-//	}
 	public void addUser(User user) {
-		users.add(user);
+		if(this.users==null)
+			this.users = new ArrayList<User>();
+		this.users.add(user);
 	}
 	public void removeUser(User user) {
-		users.remove(user);
+		if(this.users==null)
+			this.users = new ArrayList<User>();
+		else
+			this.users.remove(user);
 	}
-	public void addUsers(List<User> user) {
-		users.addAll(user);
+	public void addUsers(List<User> users) {
+		if(this.users==null)
+			this.users = users;
+		else
+			this.users.addAll(users);
 	}
-	public void removeUsers(List<User> user) {
-		users.removeAll(user);
+	public void removeUsers(List<User> users) {
+		if(this.users==null)
+			this.users = users;
+		this.users.removeAll(users);
 	}
-//	public void addLogin(Login login) {
-//		logins.add(login);
-//	}
-//	public void removeLogin(Login login) {
-//		logins.remove(login);
-//	}
-//	public void addLogins(List<Login> login) {
-//		logins.addAll(login);
-//	}
-//	public void removeLogins(List<Login> login) {
-//		logins.removeAll(login);
-//	}
-	public Integer getID() {
-		return id;
-	}
-	public void getID(Integer id) {
-		this.id=id;
-	}
+
 	@Override
 	public String toString() {
-		return "Family [id=" + id + ", users=" + users + "]";
+		return "Family [id=" + id==null?"null":id  + "]";
 	}
 	public void update(GenericBean bean) {
 		Family family = (Family) bean;
-		//this.addLogins(family.getLogins());
 	    this.addUsers(family.getUsers());
 	}
 	@Override

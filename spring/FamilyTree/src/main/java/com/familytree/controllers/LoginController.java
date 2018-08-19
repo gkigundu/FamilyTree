@@ -43,6 +43,31 @@ public class LoginController extends GenericController<Login>{
 		this.userService =userService;
 		this.family=family;
 		this.user=user;
+		this.login=login;
+	}
+	@GetMapping("/username/{username}")
+	public ResponseEntity<Login> getByUsername(@PathVariable String username) throws GeneralException{
+		this.login=loginService.getLoginByUsername(username);
+		if(this.login!=null) {
+			logger.info(this.login.toString());
+			return new ResponseEntity<Login>(this.login, HttpStatus.OK);
+		}else {
+			String msg ="No entry found with username: " + username;
+			logger.info(msg);
+			throw new GeneralException(msg);
+		}
+	}
+	@GetMapping("/email/{email}")
+	public ResponseEntity<Login> getByEmail(@PathVariable String email) throws GeneralException{
+		this.login=loginService.getLoginByEmail(email);
+		if(this.login!=null) {
+			logger.info(this.login.toString());
+			return new ResponseEntity<Login>(this.login, HttpStatus.OK);
+		}else {
+			String msg ="No entry found with email: " + email;
+			logger.info(msg);
+			throw new GeneralException(msg);
+		}
 	}
 	@GetMapping("/login")
 	public ResponseEntity<User> login(@RequestBody Login login) throws GeneralException{
@@ -83,8 +108,8 @@ public class LoginController extends GenericController<Login>{
 		}
 	}
 	@PostMapping("/register")
-	public ResponseEntity<User> register(@RequestBody Login login) throws GeneralException{
-		if(login==null || login.hasRequired()) {
+	public ResponseEntity<Login> register(@RequestBody Login login) throws GeneralException{
+		if(login==null || !login.hasRequired()) {
 			throw new GeneralException("Null registration information");
 		}
 		//Check existing
@@ -97,25 +122,31 @@ public class LoginController extends GenericController<Login>{
 				
 		HttpStatus status = HttpStatus.OK;		
 		try{
-			family=familyService.add(family);
-			user.setFamily(family);
-			user=userService.add(user);
-			family.addUser(user);
-			familyService.save(family);
-			login.setUser(user);
-			login.setId(user.getID());
-			login=loginService.add(login);
+			this.family.nullifyAllFields();
+			this.user.nullifyAllFields();
+			this.login.nullifyAllFields();
+			
+			this.login.copyAll(login);
+			
+			this.family=familyService.add(this.family);
+			
+			this.user.setFamily(this.family);
+			this.user=userService.add(this.user);
+			
+			this.login.setUser(this.user);
+			this.login=loginService.add(this.login);
+			
 		}catch(Exception e) {
-			status = HttpStatus.BAD_GATEWAY;
+			throw new GeneralException("Error while registering: 1");
 		}
-		if(user!=null) {
-			return new ResponseEntity<User>(user,status);
+		if(this.user.getId()!=null) {
+			return new ResponseEntity<Login>(this.login,status);
 		}else {
-			throw new GeneralException("User not found");
+			throw new GeneralException("Error while registering: 2");
 		}
 	}
 	@GetMapping("/register/{familyId}")
-	public ResponseEntity<User> register(@RequestBody Login login, @PathVariable Integer familyId) throws GeneralException{
+	public ResponseEntity<Login> register(@RequestBody Login login, @PathVariable Integer familyId) throws GeneralException{
 		if(login==null || login.hasRequired()) {
 			throw new GeneralException("Null registration information");
 		}
@@ -132,14 +163,14 @@ public class LoginController extends GenericController<Login>{
 			family=familyService.getByID(familyId);
 			family.addUser(user);
 			family =familyService.save(family);
-			login.setId(user.getID());
+			login.setId(user.getId());
 			login.setUser(user);
 			login = loginService.add(login);
 		}else {
 			throw new GeneralException("User not found");
 		}
 		if(user!=null) {
-			return new ResponseEntity<User>(user,status);
+			return new ResponseEntity<Login>(this.login,status);
 		}else {
 			throw new GeneralException("User not found");
 		}

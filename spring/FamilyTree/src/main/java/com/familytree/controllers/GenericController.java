@@ -23,7 +23,7 @@ import com.familytree.services.GenericService;
 public abstract class GenericController<T extends GenericBean> {
 	protected GenericService<T> service;
 	protected T bean;
-	private static final Logger logger = LoggerFactory.getLogger(GenericController.class);
+	protected static final Logger logger = LoggerFactory.getLogger(GenericController.class);
 	@Autowired
 	public GenericController(@Qualifier("GenericService")GenericService<T> genericService) {
 		super();
@@ -38,7 +38,7 @@ public abstract class GenericController<T extends GenericBean> {
 	public ResponseEntity<List<T>> getAll() throws GeneralException{
 		List<T> beans=service.getAll();
 		if(beans!=null && beans.size()>0) {
-			logger.info("Found " + beans.size() + " " + this.getType());
+			logger.info("Returning " + beans.size() +" entries");
 			return new ResponseEntity<List<T>>(beans, HttpStatus.OK);
 		}else {
 			String msg = "No entries found";

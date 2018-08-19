@@ -3,6 +3,8 @@ package com.familytree.beans;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
@@ -13,6 +15,8 @@ import javax.validation.constraints.Size;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Component
 @Entity
 @Table(schema="familytree",
@@ -22,32 +26,48 @@ import org.springframework.stereotype.Component;
 				@UniqueConstraint(columnNames={"EMAIL"}),
 				})
 public class Login  extends GenericBean  {
-	@OneToOne(fetch = FetchType.LAZY)
-    @MapsId("USER_ID")
-    @JoinColumn(name = "USER_ID")
-	private User user;
-//	@ManyToOne(fetch = FetchType.LAZY)
-//    @MapsId("FAMILY_ID")
-//    @JoinColumn(name = "FAMILY_ID")
-//	private Family family;
+
+
 	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private Integer id;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
+	private User user;
+
 	@Size(max = 15)
 	@Column(name="USERNAME")
 	private String username;
+	
 	@Size(max = 30)
 	@Column(name="EMAIL")
 	private String email;
+	
 	@Size(max = 30)
 	@Column(name="PASSWORD")
 	private String password;
 	
-	public Integer getId() {
-		return id;
+	public Login() {
+		super();
+	}
+	public Login(Integer id, User user, @Size(max = 15) String username, @Size(max = 30) String email,
+			@Size(max = 30) String password) {
+		super(id);
+		this.id = id;
+		this.user = user;
+		this.username = username;
+		this.email = email;
+		this.password = password;
 	}
 	public void setId(Integer id) {
-		this.id = id;
+		this.id=id;
+		super.setId(id);
+	}	
+	public Integer getId() {
+		return this.id;
 	}
+
 	public String getUsername() {
 		return username;
 	}
@@ -55,39 +75,38 @@ public class Login  extends GenericBean  {
 		this.username = username;
 	}
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
 	}
 	
 	public User getUser() {
-		return user;
+		return this.user;
 	}
 	public void setUser(User user) {
 		this.user = user;
 	}
-//	public Family getFamily() {
-//		return family;
-//	}
-//	public void setFamily(Family family) {
-//		this.family = family;
-//	}
-	
 	@Override
 	public String toString() {
-		return "Login [Id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + "]";
+		return "Login [Id=" + id==null?"null":id
+				+ ", username=" + username ==null?"null":username
+				+ ", email=" + email==null?"null":email
+				+ ", password=" + password==null?"null":password 
+				+ "]";
 	}
 	public void copyAll(Login login) {
-		setId(login.getId());
-		setUsername( login.getUsername());
-		setEmail(login.getEmail());
+		this.setId(login.getId());
+		this.setUsername( login.getUsername());
+		this.setEmail(login.getEmail());
+		this.setPassword(login.getPassword());
+		this.setUser(login.getUser());
 	}
 	@Override
 	public void update(GenericBean bean) {
@@ -96,7 +115,6 @@ public class Login  extends GenericBean  {
 		this.setUsername(login.getUsername());
 		this.setPassword(login.getPassword());
 		this.setEmail(login.getEmail());
-		//this.setFamily(login.getFamily());
 	}
 	public boolean hasRequired() {
 		if((this.username!=null && !this.username.isEmpty())
