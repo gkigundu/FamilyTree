@@ -13,7 +13,7 @@ export class UserService {
   private header = {
     headers:new HttpHeaders({
         ContentType:'application/json',
-        responseType:'text',
+        responseType:'application/json',
         observe:'response'
     })
 }
@@ -22,9 +22,11 @@ export class UserService {
     ) { }
 
 public register(newUserLogin:UserLogin){
+    console.log("Entering userService.register")
       console.log(newUserLogin);
       let tempUrl=this.loginUrl + '/add';
-      const requestBody = JSON.stringify(newUserLogin);
+      const requestBody = newUserLogin;
+      console.log("Exiting userService.register")
       return this.htttpClient.post(tempUrl,requestBody,this.header);
   }
   public login(userLogin:UserLogin){

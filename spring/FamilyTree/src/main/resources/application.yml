@@ -1,0 +1,61 @@
+spring:
+  profiles:
+    active: prod
+  application:
+    name: SpringDataDemo
+  data:
+    rest:
+      base-path: /familytree
+logging:
+  pattern:
+    console: '%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{15} - %msg%n' 
+server:
+  servlet:
+    context-path: /familytree
+---
+
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: watuwetu
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        default-schema: demo
+        format-sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+server:
+  port: 8080
+
+---
+
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:h2:mem:WatuWetu
+    username: roll
+    password: tide
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: false
+    properties:
+      hibernate:
+        format-sql: false
+  h2:
+    console:
+      enabled: true
+      path: /h2
+
+server:
+  port: 8080

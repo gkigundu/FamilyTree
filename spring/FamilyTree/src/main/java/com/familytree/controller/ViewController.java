@@ -4,11 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/projects")
+@RequestMapping("/")
 public class ViewController {
-	
-	@RequestMapping("/family/familytree")
 	public String getView() {
-		return "/";
+		return "index.html";
 	}
 }
