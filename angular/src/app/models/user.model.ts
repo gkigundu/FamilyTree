@@ -16,33 +16,34 @@ export class User{
     public set $userID(value:number){
         this.userID=value;
     }
-    public get $userID(){
+    public get $userID():number{
         return this.userID;
     }
     public set $email(value:string){
         this.email=value;
     }
-    public get $email(){
+    public get $email():string{
         return this.email;
     }
     public set $phoneNumber(value:number){
         this.phoneNumber=value;
     }
-    public get $phoneNumber(){
+    public get $phoneNumber():number{
         return this.phoneNumber;
     }
     public set $firstName(value:string){
         this.firstName=value;
     }
-    public get $firstName(){
+    public get $firstName():string{
         return this.firstName;
     }
     public set $lastName(value:string){
         this.lastName=value;
     }
-    public get $lastName(){
+    public get $lastName():string{
         return this.lastName;
     }
+    /*
     public set $location(value:string){
         this.location=value;
     }
@@ -55,7 +56,6 @@ export class User{
     public get $age(){
         return this.age;
     }
-    /*
     public set $profilePic(value:Blob){
 
     }

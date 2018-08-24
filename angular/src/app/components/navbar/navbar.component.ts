@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit {
   }
   logout(){
     this.auth.deleteToken();
-    this.user.persistRemoveUser();
+    this.user.persistRemove();
     this.router.navigate(['login'])
   }
 }

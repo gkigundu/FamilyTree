@@ -74,7 +74,9 @@ public class Family  extends GenericBean {
 
 	@Override
 	public String toString() {
-		return "Family [id=" + id==null?"null":id  + "]";
+		return "Family [id=" + (id==null?"null":id)  
+				+ ", users=" + (users!=null?users:"null")
+				+ "]";
 	}
 	public void update(GenericBean bean) {
 		Family family = (Family) bean;

@@ -513,6 +513,7 @@ var RegisterComponent = /** @class */ (function () {
         userLogin.$password = this.password;
         this.userService.register(userLogin).subscribe(function (resp) {
             console.log("Entering registerComponent.register.resp");
+            console.log("response is " + JSON.stringify(resp));
             var respJSON = JSON.parse(resp['body']);
             console.log("respJSON is " + respJSON);
             if (resp['status'] == 202) {
@@ -673,26 +674,6 @@ var User = /** @class */ (function () {
         },
         set: function (value) {
             this.lastName = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(User.prototype, "$location", {
-        get: function () {
-            return this.location;
-        },
-        set: function (value) {
-            this.location = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(User.prototype, "$age", {
-        get: function () {
-            return this.age;
-        },
-        set: function (value) {
-            this.age = value;
         },
         enumerable: true,
         configurable: true

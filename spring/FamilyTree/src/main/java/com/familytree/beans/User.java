@@ -1,5 +1,7 @@
 package com.familytree.beans;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Component
 @Entity
 @Table(schema="familytree",name="USERS")
-public class User  extends GenericBean {
+public class User  extends GenericBean implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
@@ -98,10 +100,12 @@ public class User  extends GenericBean {
 	
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", phoneNumber=" + phoneNumber==null?"null":phoneNumber
-				+ ", firstName=" + firstName==null?"null":firstName 
-						+ ", lastName=" + lastName==null?"null":lastName
-								+"]";
+		return "User [id=" 			+ 	(id==null?"null":id) 
+				+ ", family.id()=" 	+ 	(family!=null?family.getId()!=null?family.getId():"null":"null")
+				+ ", phoneNumber=" 	+ 	(phoneNumber==null?"null":phoneNumber)
+				+ ", firstName=" 	+ 	(firstName==null?"null":firstName) 
+				+ ", lastName=" 	+ 	(lastName==null?"null	":lastName)
+				+"]";
 	}
 	public void copyAll(User user) {
 		setId(user.getId());

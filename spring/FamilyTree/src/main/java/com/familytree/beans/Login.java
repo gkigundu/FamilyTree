@@ -95,10 +95,11 @@ public class Login  extends GenericBean  {
 	}
 	@Override
 	public String toString() {
-		return "Login [Id=" + id==null?"null":id
-				+ ", username=" + username ==null?"null":username
-				+ ", email=" + email==null?"null":email
-				+ ", password=" + password==null?"null":password 
+		return "Login [Id=" + (id==null?"null":id)
+				+ ", user_id=" + (user!=null?user.getId()!=null?user.getId():"null":"null") 
+				+ ", username=" + (username ==null?"null":username)
+				+ ", email=" + (email==null?"null":email)
+				+ ", password=" + (password==null?"null":password) 
 				+ "]";
 	}
 	public void copyAll(Login login) {

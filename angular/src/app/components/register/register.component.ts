@@ -3,6 +3,7 @@ import { UserService } from '../../services/user.service';
 import { UserLogin } from '../../models/userlogin.model';
 import { Router } from '../../../../node_modules/@angular/router';
 import { User } from '../../models/user.model';
+import { DTO } from '../../models/dto.model';
 
 @Component({
   selector: 'app-register',
@@ -28,20 +29,31 @@ export class RegisterComponent implements OnInit {
     this.userService.register(userLogin).subscribe(
       resp=>{
         console.log("Entering registerComponent.register.resp")
-        let respJSON = JSON.parse(resp['body']);
-        console.log("respJSON is " + respJSON)
-        if(resp['status'] == 202){
-            let newUser = new User();
-            newUser.$setAll(respJSON);
-            this.userService.persistSetUser(newUser);
+        console.log("response is " + JSON.stringify(resp));
+        console.log(resp.headers);
+        this.userService
+        let dto = resp.body;
+        dto.$setAll(resp.body);
+        console.log(dto);
+        //console.log("respJSON is " + respJSON)
+        if(dto.$status){
+          console.log('status is true');
+          dto.$status=null;
+          dto.$error=null;
+            this.userService.persistSet(dto);
+            console.log('Start navigating home');
             this.router.navigate(['home']);
+            console.log('End navigating home');
+        }else{
+          console.log('status not true. Status: ' + dto.$status)
+          console.log(resp)
         }
         console.log("Exiting registerComponent.register.resp")
       },
-      err=>{
+      err=>{ 
         console.log("Entering registerComponent.register.err")
           alert("Unable to register!");
-          console.log(err.status);
+          console.log(err);
           console.log("Exitin registerComponent.register.err")
       }
     );

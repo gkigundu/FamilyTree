@@ -75,8 +75,8 @@ public class GenericService<T extends GenericBean> {
 	    	}else {
 	        	T bean = entry.get();
 	        	logger.info("Found: " + bean.toString());
+	        	return bean;
 	        }
-	    	logger.info("No entry found with id: "+ id);
     	}else {
     		logger.warn("Null id provided for getByID()");
     	}
